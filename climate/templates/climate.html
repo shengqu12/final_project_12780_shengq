@@ -1,0 +1,16 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Submit Climate Record</title>
+</head>
+<body>
+  <h1>Submit Climate Record</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>
