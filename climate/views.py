@@ -40,3 +40,26 @@ def dashboard(request):
         "communities_json": json.dumps(comm_list, default=str),
     }
     return render(request, "climate/dashboard.html", context)
+
+from django.http import HttpResponse
+import openpyxl
+from openpyxl.utils import get_column_letter
+
+def export_xlsx(request):
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "ClimateRecords"
+    headers = ["Community", "Borough", "Date", "Temperature", "Precipitation", "Pollution"]
+    ws.append(headers)
+
+    records = ClimateRecord.objects.select_related("community").order_by("community__name", "date")
+    for r in records:
+        ws.append([r.community.name, r.community.borough, r.date.isoformat(), r.temperature, r.precipitation, r.pollution_index])
+
+    for i, _ in enumerate(headers, 1):
+        ws.column_dimensions[get_column_letter(i)].width = 18
+
+    response = HttpResponse(content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    response["Content-Disposition"] = 'attachment; filename="climate_records.xlsx"'
+    wb.save(response)
+    return response
