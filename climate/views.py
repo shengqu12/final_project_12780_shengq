@@ -14,3 +14,29 @@ class ClimateRecordCreateView(CreateView):
 
 class SubmitSuccessView(TemplateView):
     template_name = "climate/submit_success.html"
+
+
+
+
+
+from django.shortcuts import render
+from django.db.models import Avg
+from django.utils.dateparse import parse_date
+import json
+
+def dashboard(request):
+    communities = Community.objects.all()
+    comm_list = []
+    for c in communities:
+        avg_pollution = c.records.aggregate(avg=Avg("pollution_index"))["avg"]
+        comm_list.append({
+            "id": c.id,
+            "name": c.name,
+            "lat": float(c.latitude),
+            "lng": float(c.longitude),
+            "avg_pollution": avg_pollution or 0
+        })
+    context = {
+        "communities_json": json.dumps(comm_list, default=str),
+    }
+    return render(request, "climate/dashboard.html", context)
