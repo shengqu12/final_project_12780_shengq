@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "climate",
 ]
 
 MIDDLEWARE = [
@@ -75,8 +76,15 @@ WSGI_APPLICATION = "final_project.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": 'final',
+        'USER': 'root',
+        'PASSWORD': 'Xe5GRyg4',
+        'HOST': '',
+        'PORT': '',
+        'OPTIONS': {
+            'unix_socket': '/opt/homebrew/var/mysql/mysql.sock',
+        }
     }
 }
 

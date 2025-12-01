@@ -1,15 +1,26 @@
-# Use official Python image
-FROM python:3.11-slim
+# Use official Python base image
+FROM python:3.13-slim
 
+# Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+# Set work directory
 WORKDIR /app
 
-COPY pyproject.toml requirements.txt ./
-RUN pip install --upgrade pip && pip install -r requirements.txt
+# Install dependencies
+COPY requirements.txt /app/
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
-COPY . .
+# Copy project
+COPY . /app/
 
-ENV PORT 8000
-CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Collect static files (if any)
+RUN python manage.py collectstatic --noinput
+
+# Expose port
+EXPOSE 8000
+
+# Run Django development server
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
