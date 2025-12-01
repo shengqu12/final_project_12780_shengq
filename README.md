@@ -1,6 +1,5 @@
-# Community Climate Dashboard
-
-A Django web application to submit, visualize, and export community climate data.
+## Community Climate Dashboard
+This is about a dashboard showing the risk level of different borough in New York City in 2024. With this html, the decision makers can pick and compare different months in 2024 to decide which community needs more aids from government to deal with climate problem.
 
 ## Features
 - Data submission form
@@ -8,6 +7,7 @@ A Django web application to submit, visualize, and export community climate data
 - Admin interface
 - XLSX export
 - Dockerized, with GitHub Actions CI and pytest-django tests
+
 
 ## Quick start (development)
 1. git clone ...
