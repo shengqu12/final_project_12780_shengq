@@ -1,6 +1,10 @@
 ## Community Climate Dashboard
 This is about a dashboard showing the risk level of different borough in New York City in 2024. With this html, the decision makers can pick and compare different months in 2024 to decide which community needs more aids from government to deal with climate problem.
 
+# ERD
+
+![ERD diagram](./images/ERD%20.png)
+
 ## Features
 - Data submission form
 - Dashboard: Leaflet map charts
